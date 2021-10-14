@@ -13,8 +13,7 @@ interface showAlertProps {
 	alertStyle: string;
 }
 
-const myAction = async ({title, description, alertStyle}: showAlertProps) => {
-
+const alertBox = async ({title, description, alertStyle}: showAlertProps) => {
 	const choice = await AlertAsync(
 		title,
 		description,
@@ -55,7 +54,7 @@ export function Home() {
 				description: "Voce não pode cadastrar uma task com o mesmo nome",
 				alertStyle: "cancel"
 			}
-			myAction(alertData);
+			alertBox(alertData);
 			return;
 		}
 
@@ -76,14 +75,14 @@ export function Home() {
 			alertStyle: "default"
 		}
 
-		const result = await myAction(alertData);
+		const result = await alertBox(alertData);
 		if(result)
     	setTasks(tasks.filter((value) => value.id !== id));
   }
 
-	function handleEditTask(id: number){
+	function handleEditTask(id: number, taskNewTitle: string){
 		const newData = tasks.map(task => 
-			task.id === 1634227806154 ? {...task, title: 'something'} : task
+			task.id === id ? {...task, title: taskNewTitle} : task
 		);
 
 		setTasks(newData);
